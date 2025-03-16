@@ -121,7 +121,7 @@ a:hover {
 	width: auto;
 	max-width: 330px;
 	margin: 0em auto 0em auto;
-	padding: 0.8em auto 0em auto;
+	padding: 0.8em 0em 0em 0em;
 	border-radius: 24px;
 }
 
