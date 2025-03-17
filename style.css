@@ -903,6 +903,12 @@ li {
 	}
 }
 
+@media screen and (max-width: 500px) {
+	.desktop .projects-marquee__project {
+		width: 350px;
+	}
+}
+
 /* Experience */
 
 .experience {
