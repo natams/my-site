@@ -6,7 +6,7 @@
 
 /* Loader */
 
-*,
+/* *,
 ::before,
 ::after {
     box-sizing: border-box;
@@ -109,7 +109,7 @@
         bottom: 0;
         left: 0;
     }
-}
+} */
 
 /* Background for Home */
 
