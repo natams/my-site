@@ -74,6 +74,35 @@ function handleSubmit(event) {
         });
 }
 
+// Loader
+
+window.addEventListener("load", function () {
+    // Hide loader
+    document.querySelector(".loader-container").classList.add("hidden");
+
+    // Show main-loader content
+    setTimeout(() => {
+      document.querySelector(".main-loader").classList.add("visible");
+    }, 500); // Small delay for smooth transition
+  });
+
+//   Slider btn
+document.getElementById("togBtn").addEventListener("change", function() {
+    var isChecked = this.checked;
+    
+    // Show/hide desktop and mobile content based on toggle state
+    if (isChecked) {
+      document.querySelector(".desktop").style.display = "none";
+      document.querySelector(".mobile").style.display = "block";
+    } else {
+      document.querySelector(".desktop").style.display = "block";
+      document.querySelector(".mobile").style.display = "none";
+    }
+  });
+  
+
+
+
 
 
 
