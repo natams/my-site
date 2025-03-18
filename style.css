@@ -780,8 +780,12 @@ input:checked+.slider .off {
 .projects-marquee__project__image img {
 	width: 100%;
 	height: auto;
+	/* border: solid 1px #3a3a3a; */
+}
+
+.desktop .projects-marquee__project__image img,
+.mobile .projects-marquee__project__image img {
 	border-radius: 12px;
-	border: solid 1px #3a3a3a;
 }
 
 .projects-marquee:hover .projects-marquee__content {
