@@ -113,15 +113,15 @@ a:hover {
 /* HEADER */
 
 .nav-bar {
-	background-color: #ffffff08;
+	background-color: #99999923;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	gap: 25px;
 	width: auto;
 	max-width: 330px;
-	margin: 0em auto 0em auto;
-	padding: 0.8em 0em 0em 0em;
+	margin: 0.8em auto 0em auto;
+	padding: 0em 0em 0.1em 0em;
 	border-radius: 24px;
 }
 
@@ -591,20 +591,21 @@ li {
 }
 
 .projects h2:first-child {
-	margin: 1em auto 0.5em auto;
+	margin: 1.5em auto 0.2em auto;
 }
 
 /* Toggle */
 
 .toggle-container {
 	text-align: center;
+	margin: 0em 0em 1em 0em;
 }
 
 .switch {
 	position: relative;
 	display: inline-block;
-	width: 120px;
-	height: 35px;
+	width: 100px;
+	height: 33px;
 }
 
 .switch input {
@@ -628,9 +629,9 @@ li {
 .slider:before {
 	position: absolute;
 	content: "";
-	height: 26px;
-	width: 26px;
-	left: 4px;
+	height: 23px;
+	width: 23px;
+	left: 5px;
 	bottom: 4px;
 	background-color: #ffffff;
 	transition: .4s;
@@ -641,12 +642,12 @@ input:checked+.slider {
 }
 
 input:checked+.slider:before {
-	transform: translateX(84px);
+	transform: translateX(65px);
 }
 
 .on {
 	display: none;
-	left: 40%;
+	left: 20% !important;
 }
 
 .off {
@@ -658,11 +659,13 @@ input:checked+.slider:before {
 	color: #ffffff;
 	position: absolute;
 	transform: translate(-50%, -50%);
-	top: 50%;
-	font-size: 0.6em;
+	top: 35%;
+	left: 36%;
+	font-size: 0.5em;
 	user-select: none;
 	text-transform: uppercase;
 	font-weight: 700;
+	transform: scale(1, 1.4);
 }
 
 input:checked+.slider .on {
@@ -688,7 +691,7 @@ input:checked+.slider .off {
 @media (max-width: 600px) {
 	.toggle-container {
 		text-align: center;
-		margin: 2em 0em;
+		margin: 0.5em 0em 2em 0em;
 	}
 }
 
