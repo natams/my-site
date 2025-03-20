@@ -965,7 +965,7 @@ input:checked+.slider .off {
 	justify-content: center;
 	align-items: center;
 	padding: 4em 4em 2em 4em;
-	margin: 0em 1em;
+	margin: 0em 1em 4em 1em;
 	color: #b0b0b0c4;
 	font-family: "Poppins", "Poppins Placeholder", sans-serif;
 	gap: 3em;
@@ -1083,12 +1083,16 @@ input:checked+.slider .off {
 
 @media screen and (max-width: 800px) {
 	.experience {
-		padding: 0em 0.5em 0em 0.5em;
+		padding: 0em 3.5em 0em 0.5em;
 		margin: 4em 0em 0em 0em;
 	}
 
 	.experience-entry {
-		gap: 0.5em;
+		gap: 1em;
+	}
+
+	.experience-content {
+		padding: 0em 0em 0em 0em;
 	}
 
 	.experience-dot {
@@ -1098,7 +1102,7 @@ input:checked+.slider .off {
 	}
 
 	.experience-entry:nth-of-type(2) .experience-line {
-		height: 103%;
+		height: 102%;
 		top: -35px;
 	}
 
@@ -1107,11 +1111,19 @@ input:checked+.slider .off {
 @media screen and (max-width: 500px) {
 	.experience {
 		padding: 0em 0em 0em 0em;
-		margin: 2em 0.5em 5em 0em;
+		margin: 2em 0em 0em 0em;
+		overflow-x: hidden;
+	}
+
+	.experience-entry {
+		margin: 0em 0em 0em 0em;
+		gap: 0.5em;
+		justify-content: end;
+        max-width: 380px;
 	}
 
 	.experience-year {
-		margin: 0.5em 0em 0em 2em;
+		margin: 0.5em 0em 0em 0em;
 	}
 
 	.experience-content h2 {
@@ -1123,14 +1135,24 @@ input:checked+.slider .off {
 	}
 
 	.experience-entry:nth-of-type(2) .experience-line {
-		height: 102%;
+		height: 101%;
 		top: -15px;
 	}
 }
 
 @media screen and (max-width: 400px) {
+	.experience-entry {
+		margin: 0em 3em 0em 0em;
+		width: 100%;
+		justify-content: center;
+	}
+	
 	.experience-year {
-		margin: 0.5em 0em 0em 6em;
+		margin: 0.5em 0em 0em 7em;
+	}
+
+	.experience-content {
+		max-width: 255px;
 	}
 
 	.experience-content h2 {
@@ -1138,11 +1160,11 @@ input:checked+.slider .off {
 	}
 
 	.experience-content p {
-		margin: 0em 4.5em 2em 0em;
+		margin: 0em 0em 2em 0em;
 	}
 
 	.experience-entry:nth-of-type(2) .experience-line {
-		height: 102%;
+		height: 101%;
 		top: -15px;
 	}
 }
