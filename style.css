@@ -1119,7 +1119,7 @@ input:checked+.slider .off {
 		margin: 0em 0em 0em 0em;
 		gap: 0.5em;
 		justify-content: end;
-        max-width: 380px;
+        max-width: 410px;
 	}
 
 	.experience-year {
@@ -1131,7 +1131,8 @@ input:checked+.slider .off {
 	}
 
 	.experience-content p {
-		margin: 0em 1.5em 2em 0em;
+		margin: 0em 0em 2em 0em;
+		max-width: 280px;
 	}
 
 	.experience-entry:nth-of-type(2) .experience-line {
@@ -1145,6 +1146,7 @@ input:checked+.slider .off {
 		margin: 0em 3em 0em 0em;
 		width: 100%;
 		justify-content: center;
+		max-width: 430px;
 	}
 	
 	.experience-year {
@@ -1161,6 +1163,7 @@ input:checked+.slider .off {
 
 	.experience-content p {
 		margin: 0em 0em 2em 0em;
+		max-width: 250px;
 	}
 
 	.experience-entry:nth-of-type(2) .experience-line {
