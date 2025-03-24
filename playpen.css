@@ -451,6 +451,7 @@ h1 {
 
 .play-5 .title {
     margin: 0em 0em 0.5em 0em;
+    font-size: 1.1em;
     font-family: Poetsen One, sans-serif;
 }
 
@@ -499,6 +500,14 @@ h1 {
     .play-5 .colorGuess {
         transform: scale(0.95);
     }
+
+    .play-5 #resultText {
+        font-size: 0.8em;
+    }
+
+    .play-5 #nextBtn {
+        margin: 5px 0px 0px 0px;
+    }
 }
 
 @media screen and (max-width: 500px) {
@@ -512,7 +521,7 @@ h1 {
     }
 
     .play-5 .result {
-        margin: 10px 0px 6px 0px;
+        margin: 14px 0px 2px 0px;
     }
 }
 
@@ -546,6 +555,7 @@ h1 {
     align-items: center;
     flex-direction: column;
     background: #000;
+    padding: 0em;
 }
 
 .play-6-game {
@@ -572,6 +582,7 @@ h1 {
     background-size: 20px 20px;
     -webkit-background-clip: text;
     background-clip: text;
+    letter-spacing: 1px;
 }
 
 .game-board {
@@ -684,10 +695,9 @@ h1 {
     }
 
     .play-6 h3 {
-        font-size: 1.3em;
-        color: #fff;
-        background-image: none;
-        -webkit-text-stroke: transparent;
+        font-size: 1.6em;
+        /* color: #fff; */
+        /* background-image: none; */
     }
 }
 
@@ -835,6 +845,11 @@ h1 {
     width: 80px;
     height: 80px;
 }
+
+.play-8 .whack-mole-grid .whack-hole.whack-active::before {
+    font-size: 2em;
+}
+
 }
 
 @media screen and (max-width: 500px) {
@@ -860,6 +875,16 @@ h1 {
         .play-8 .whack-mole-grid .whack-hole {
             width: 70px;
             height: 70px;
+        }
+
+        .play-8 .whack-mole-grid .whack-hole.whack-active::before {
+            font-size: 1.9em;
+            top: 15px;
+            left: 50%;
+        }
+
+        #gameOverMessage {
+            font-size: 0.7em;
         }
 }
 

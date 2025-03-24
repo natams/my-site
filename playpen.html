@@ -289,7 +289,7 @@
                     <div id="emojiRainContainer"></div>
                 </div>
                 <script>
-                   const emojis = ['😀', '😂', '😍', '😎', '😜', '🤩', '🥳', '😡'];
+                 const emojis = ['😀', '😂', '😍', '😎', '😜', '🤩', '🥳', '😡'];
 let gameBoard = document.getElementById("gameBoard");
 let movesCounter = document.getElementById("moves");
 let restartBtn = document.getElementById("restartBtn");
@@ -309,7 +309,7 @@ function createGame() {
     moves = 0;
     movesCounter.textContent = moves;
     firstCard = secondCard = null;
-    restartBtn.style.display = "none";
+    restartBtn.style.display = "none"; // Hide restart button initially
 
     emojiPairs.forEach(emoji => {
         let card = document.createElement("div");
@@ -328,6 +328,7 @@ function flipCard() {
 
     if (!firstCard) {
         firstCard = this;
+        restartBtn.style.display = "inline-block"; // Show restart button when first card is clicked
     } else {
         secondCard = this;
         moves++;
@@ -361,7 +362,7 @@ function resetTurn() {
 function checkWin() {
     if (document.querySelectorAll(".matched").length === emojis.length * 2) {
         startEmojiRain();
-        restartBtn.style.display = "inline-block";
+        restartBtn.style.display = "inline-block"; // Restart button appears after winning
     }
 }
 
