@@ -239,7 +239,7 @@ h1 {
 
 .play-item {
     position: relative;
-    border: solid 1px #b6b6b6;
+    border: solid 1px #8b8b8b;
     padding: 1em;
     border-radius: 12px;
     overflow: hidden;
@@ -780,7 +780,8 @@ h1 {
     position: relative;
     cursor: pointer;
     transition: transform 0.15s ease-in-out;
-    box-shadow: inset 2px 2px 6px #000, inset 0px 0px 6px rgba(0, 255, 128, 0.5);
+    box-shadow: inset 2px 2px 6px #00ff8080, 
+    inset 0px 0px 6px #00ff8080;
 }
 
 .play-8 .whack-mole-grid .whack-hole:hover {

@@ -191,7 +191,7 @@ a:hover {
 	border-radius: 48px;
 	margin: 0em 0em;
 	border-bottom: none;
-	border: solid 1px #ffffff3d;
+	border: solid 1px #ffffff25;
 	background-color: #000000e8;
 	-webkit-mask: linear-gradient(180deg, #000000 0%, #000000 80%, transparent 100%);
 	mask: linear-gradient(180deg, #000000 0%, #000000 80%, transparent 100%);
@@ -433,7 +433,7 @@ h2 {
 	mask-image: linear-gradient(to right, transparent, transparent 10%, #000000e6 20%, #000000e6 80%, transparent 90%, transparent);
 	-webkit-mask-image: linear-gradient(to right, transparent, transparent 10%, #000000e6 20%, #000000e6 80%, transparent 90%, transparent);
 	background: linear-gradient(to right, transparent, transparent 20%, #000000e8 30%, #000000e8 70%, transparent 80%, transparent);
-	border: solid 1px #ffffff70;
+	border: solid 1px #ffffff2d;
 }
 
 .marquee-content {
@@ -588,20 +588,20 @@ li {
 @font-face {
 	font-family: 'Impact';
 	src: url('path/to/impact/impact-regular.woff2') format('woff2'),
-		 url('path/to/impact/impact-regular.woff') format('woff');
+		url('path/to/impact/impact-regular.woff') format('woff');
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
-  }
-  
-  @font-face {
+}
+
+@font-face {
 	font-family: 'Impact';
 	src: url('path/to/impact/impact-bold.woff2') format('woff2'),
-		 url('path/to/impact/impact-bold.woff') format('woff');
+		url('path/to/impact/impact-bold.woff') format('woff');
 	font-weight: bold;
 	font-style: normal;
-  }
-  
+}
+
 
 .projects h2 {
 	font-size: 2em;
@@ -770,13 +770,6 @@ input:checked+.slider .off {
 	gap: 10px;
 }
 
-/* .projects-marquee__content:first-child {
-		justify-content: flex-end;
-}
-
-.projects-marquee__content:last-child {
-		justify-content: flex-start;
-} */
 
 .project-container:nth-of-type(2) .projects-marquee__content,
 .project-container:nth-of-type(4) .projects-marquee__content {
@@ -815,7 +808,6 @@ input:checked+.slider .off {
 .projects-marquee__project__image img {
 	width: 100%;
 	height: auto;
-	/* border: solid 1px #3a3a3a; */
 }
 
 .desktop .projects-marquee__project__image img,
@@ -1022,9 +1014,6 @@ input:checked+.slider .off {
 	max-width: 1200px;
 	align-items: start;
 	padding: 1em 0em 1em 0em !important;
-	/* background: linear-gradient(to bottom, #000000, #0000006e); */
-	/* border-radius: 48px; */
-	/* border: solid 1px #9191915c; */
 }
 
 .experience-year {
@@ -1152,7 +1141,7 @@ input:checked+.slider .off {
 @media screen and (max-width: 500px) {
 	.experience {
 		padding: 0em 0em 0em 0em;
-		margin: 2em 0em 0em 0em;
+		margin: 4em 0em 5em 0em;
 	}
 
 	.experience-entry {
@@ -1279,7 +1268,7 @@ input:checked+.slider .off {
 	max-width: 700px;
 }
 
-.contact h1 {
+.contact h2 {
 	font-size: 4.5em;
 	font-family: "Poppins", "Poppins Placeholder", sans-serif;
 	text-transform: uppercase;
@@ -1361,17 +1350,23 @@ textarea:-webkit-autofill:focus {
 
 .thank-you-message {
 	background: linear-gradient(to bottom, #363636, #00000000);
-	;
 	padding: 2em 1em 3em 1em;
 	border-radius: 20px;
 	margin: 2em 0em;
 }
 
 #thank-you-message {
+	font-size: 0.9em;
 	display: none;
-	color: #ffffff;
-	margin: 1em 0em 0em 0em;
+	color: #d6d6d6e2;
+	margin: 2em 0em 0em 0em;
 	text-align: center;
+	padding: 2em 1em 3em 1em;
+	border-radius: 20px;
+	border: solid 1px #ffffff3d;
+    background-color: #131313;
+    -webkit-mask: linear-gradient(180deg, #000000 0%, #000000 15%, transparent 100%);
+    mask: linear-gradient(180deg, #000000 0%, #000000 15%, transparent 100%);
 }
 
 .contact button {
@@ -1383,7 +1378,7 @@ textarea:-webkit-autofill:focus {
 }
 
 @media screen and (max-width: 1000px) {
-	.contact h1 {
+	.contact h2 {
 		font-size: 3.5em;
 		margin: 0em 0em 0em 0em;
 	}
@@ -1394,30 +1389,34 @@ textarea:-webkit-autofill:focus {
 	}
 }
 
-@media screen and (max-width: 800px) {
-	.contact h1 {
-		font-size: 2.6em;
-		margin: 0em 0em 0em 0em;
+@media screen and (max-width: 930px) {
+	.contact {
+		transform: scale(0.9);
+		margin: 1em 0em;
 	}
+}
 
+@media screen and (max-width: 800px) {
 	.contact .container {
 		padding: 1em;
 	}
+
 
 	#contact-form {
 		padding: 1.5em 0.6em 3em 0.6em;
 	}
 }
 
-@media screen and (max-width: 680px) {
+@media screen and (max-width: 700px) {
 	.contact {
+		transform: scale(1.0);
 		flex-direction: column;
 		align-items: center;
 		margin: 2em 0em 0em 0em;
 	}
 
 	.contact .container {
-		height: 550px;
+		height: 580px;
 		width: 85vw;
 	}
 
@@ -1429,14 +1428,15 @@ textarea:-webkit-autofill:focus {
 		margin: 0.5em 0em 0.5em 0em;
 	}
 
-	.contact h1 {
-		font-size: 3em;
-		margin: 0em 0.5em 0.5em 0.5em;
+	.contact h2 {
+		font-size: 3.5em;
+		margin: 0em 0.5em 0.2em 0.5em;
 		text-align: center;
 	}
 
 	#contact-form {
 		padding: 1.5em 1em 3em 1em;
+		margin: 0em 3em;
 	}
 
 	.form-row {
@@ -1446,8 +1446,17 @@ textarea:-webkit-autofill:focus {
 }
 
 @media screen and (max-width: 490px) {
+	.contact h2 {
+        font-size: 3em;
+        margin: 0em 0.5em 0.3em 0.5em;
+    }
+	
 	.form {
 		width: 90vw;
+		margin: 0em auto;
+	}
+
+	#contact-form {
 		margin: 0em auto;
 	}
 

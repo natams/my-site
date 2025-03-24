@@ -52,35 +52,7 @@ document.querySelectorAll(".slide-btn a").forEach(button => {
     });
 });
 
-// Form in Contact Page
-function handleSubmit(event) {
-    event.preventDefault();  // Prevent form from submitting and redirecting
 
-    const form = document.getElementById('contact-form');
-    const thankYouMessage = document.getElementById('thank-you-message');
-
-    // Hide the form and show the "Thank You" message
-    form.style.display = 'none';
-    thankYouMessage.style.display = 'block';
-
-    // Submit the form data to Formspree
-    const formData = new FormData(form);
-    fetch(form.action, {
-        method: 'POST',
-        body: formData,
-    })
-        .then(response => {
-            if (response.ok) {
-                // Optionally, you can do something here after a successful submission
-            } else {
-                // Handle errors here if necessary
-                alert("Something went wrong. Please try again.");
-            }
-        })
-        .catch(error => {
-            alert("An error occurred: " + error);
-        });
-}
 
 // Loader
 
