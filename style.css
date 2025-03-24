@@ -134,6 +134,10 @@ a:hover {
 	padding: 10px 10px 10px 10px;
 }
 
+.svg-icon a {
+    pointer-events: auto;
+}
+
 .svg-icon::after {
 	content: attr(data-title);
 	position: absolute;
@@ -576,18 +580,20 @@ li {
 }
 
 .projects h2 {
-	font-size: 2.5em;
+	font-size: 2em;
+	font-family: fantasy;
 	text-align: center;
 	text-transform: uppercase;
-	margin: 1em auto 1em auto;
+	margin: 2em auto 0.5em auto;
 	font-weight: 500;
 	line-height: 1;
-	-webkit-text-fill-color: #ffffff73;
+	-webkit-text-fill-color: #ffffff;
 	background: none;
-	text-shadow: 1px 1px 18px #ffffff73;
-	-webkit-text-stroke: 1px #ffffff86;
+	text-shadow: -1px -1px 20px #ffffff73;
+	-webkit-text-stroke: 1px #ffffffe6;
 	-moz-text-fill-color: transparent;
 	-webkit-text-fill-color: transparent;
+	letter-spacing: 1px;
 }
 
 .projects h2:first-child {
@@ -1112,7 +1118,6 @@ input:checked+.slider .off {
 	.experience {
 		padding: 0em 0em 0em 0em;
 		margin: 2em 0em 0em 0em;
-		overflow-x: hidden;
 	}
 
 	.experience-entry {

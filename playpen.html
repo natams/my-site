@@ -16,10 +16,13 @@
         href="https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
 
-    <!-- Link to CSS-->
+    <!-- Link to CSS and JS -->
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="background.css" />
     <link rel="stylesheet" href="playpen.css" />
     <script src="https://kit.fontawesome.com/14cfbcea0d.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
@@ -34,7 +37,7 @@
 
 </head>
 
-<body>
+<body class="playpen">
 
     <header>
 
@@ -94,11 +97,495 @@
 
     <main>
 
-        <div class="sign">
+        <div class="fractal-background"></div>
+
+        <!-- <div class="sign">
             <div>
                 <h1>Coming Soon</h1>
             </div>
             <div class="dot-flashing"></div>
+        </div> 
+        -->
+
+        <div class="play-header">
+            <h2>Welcome to my</h2>
+            <svg viewBox="0 0 1100 150">
+                <symbol id="s-text">
+                    <text text-anchor="middle" x="50%" y="50%" dy=".35em">Playpen</text>
+                </symbol>
+                <use xlink:href="#s-text" class="text"></use>
+                <use xlink:href="#s-text" class="text"></use>
+                <use xlink:href="#s-text" class="text"></use>
+                <use xlink:href="#s-text" class="text"></use>
+                <use xlink:href="#s-text" class="text"></use>
+            </svg>
+            <button class="border" id="refresh-btn">Refresh Page</button>
+
+            <script>
+                document.getElementById("refresh-btn").addEventListener("click", function () {
+                    location.reload();
+                });
+            </script>
+        </div>
+
+        <div class="playpen-page">
+
+            <div class="play-item play-1">
+                <div class="play-unsubscribe">
+                    <p>Are you sure you want to unsubscribe?</p>
+                    <button id='runaway-btn'>Unsubscribe</button>
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const button = document.getElementById("runaway-btn");
+                        const playItem = document.querySelector(".play-item");
+
+                        if (!button || !playItem) {
+                            console.error("Button or playItem not found in the DOM.");
+                            return;
+                        }
+
+                        const animateMove = (element, prop, pixels) =>
+                            anime({
+                                targets: element,
+                                [prop]: `${pixels}px`,
+                                easing: "easeOutCirc"
+                            });
+
+                        ["mouseover", "click"].forEach(function (event) {
+                            button.addEventListener(event, function () {
+                                const boxRect = playItem.getBoundingClientRect();
+                                const btnRect = this.getBoundingClientRect();
+
+                                // Adjust maxTop and maxLeft by removing half the button's size to keep it inside the box
+                                const maxTop = boxRect.height - btnRect.height / 2;
+                                const maxLeft = boxRect.width - btnRect.width / 2;
+                                const minTop = btnRect.height / 2;
+                                const minLeft = btnRect.width / 2;
+
+                                const top = getRandomNumber(minTop, maxTop);
+                                const left = getRandomNumber(minLeft, maxLeft);
+
+                                animateMove(this, "top", top).play();
+                                animateMove(this, "left", left).play();
+                            });
+                        });
+
+                        const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min) + min);
+                    });
+                </script>
+            </div>
+
+            <div class="play-item play-8">
+                <div class="play-8-scale">
+                    <h1 class="whack-title">Tap Attack</h1>
+                    <p id="gameOverMessage">Game Over! You missed 3 times.</p>
+                    <button id="playnow" class="whack-playnow">Play Now</button>
+                    <div class="whack-mole-grid">
+                        <div class="whack-hole" data-index="0"></div>
+                        <div class="whack-hole" data-index="1"></div>
+                        <div class="whack-hole" data-index="2"></div>
+                        <div class="whack-hole" data-index="3"></div>
+                        <div class="whack-hole" data-index="4"></div>
+                        <div class="whack-hole" data-index="5"></div>
+                        <div class="whack-hole" data-index="6"></div>
+                        <div class="whack-hole" data-index="7"></div>
+                        <div class="whack-hole" data-index="8"></div>
+                    </div>
+                    <p class="whack-score" id="moleScore">Score: 0</p>
+                    <button class="whack-restart" id="restartMole" style="display: none;">Restart Game</button>
+                </div>
+                <script>
+                    let moleScore = 0;
+                    let missCount = 0;
+                    const maxMisses = 3;
+
+                    const scoreDisplay = document.getElementById("moleScore");
+                    const gameOverMessage = document.getElementById("gameOverMessage");
+                    const playButton = document.getElementById("playnow");
+                    const restartButton = document.getElementById("restartMole");
+                    const holes = document.querySelectorAll(".whack-mole-grid .whack-hole");
+
+                    let activeHoleIndex = -1;
+                    let moleInterval;
+                    let gameStarted = false;
+
+                    // Function to show a mole in a random hole
+                    function showMole() {
+                        if (activeHoleIndex >= 0) {
+                            // If the mole is still there and wasn't whacked, it's a miss
+                            if (holes[activeHoleIndex].classList.contains("whack-active")) {
+                                missCount++;
+                            }
+                            holes[activeHoleIndex].classList.remove("whack-active");
+                        }
+
+                        if (missCount >= maxMisses) {
+                            endGame();
+                            return;
+                        }
+
+                        activeHoleIndex = Math.floor(Math.random() * holes.length);
+                        holes[activeHoleIndex].classList.add("whack-active");
+                    }
+
+                    // Start game: Reset everything and begin showing moles
+                    function startMoleGame() {
+                        moleScore = 0;
+                        missCount = 0;
+                        scoreDisplay.innerText = "Score: " + moleScore;
+
+                        gameOverMessage.style.display = "none"; // Hide Game Over message
+                        playButton.style.display = "none"; // Hide play button
+                        restartButton.style.display = "inline-block"; // Show restart button
+
+                        gameStarted = true;
+                        moleInterval = setInterval(showMole, 1000);
+                    }
+
+                    // End game: Show Game Over message and stop mole spawning
+                    function endGame() {
+                        clearInterval(moleInterval);
+                        gameStarted = false;
+
+                        gameOverMessage.style.display = "block"; // Show "Game Over!"
+                        playButton.style.display = "none"; // Hide Play Now button
+                        restartButton.style.display = "inline-block"; // Keep restart button visible
+                    }
+
+                    // Restart game when restart button is clicked
+                    restartButton.addEventListener("click", () => {
+                        gameOverMessage.style.display = "none"; // Hide Game Over message
+                        playButton.style.display = "inline-block"; // Show Play Now button
+                        restartButton.style.display = "none"; // Hide Restart button
+                    });
+
+                    // Add click event listeners to all holes
+                    holes.forEach((hole) => {
+                        hole.addEventListener("click", () => {
+                            if (gameStarted && hole.classList.contains("whack-active")) {
+                                moleScore++;
+                                scoreDisplay.innerText = "Score: " + moleScore;
+                                hole.classList.remove("whack-active");
+                                activeHoleIndex = -1;
+                                missCount = 0; // Reset miss count on a successful hit
+                            }
+                        });
+                    });
+
+                    // Start game when "Play Now" is clicked
+                    playButton.addEventListener("click", startMoleGame);
+                </script>
+            </div>
+
+            <div class="play-item play-6">
+                <div class="memory-game">
+                    <div class="play-6-game">
+                        <h3>Emoji Memory Game</h3>
+                        <div class="game-board" id="gameBoard"></div>
+                        <p>Moves: <span id="moves">0</span></p>
+                        <button id="restartBtn">Restart Game</button>
+                    </div>
+                    <div id="emojiRainContainer"></div>
+                </div>
+                <script>
+                   const emojis = ['😀', '😂', '😍', '😎', '😜', '🤩', '🥳', '😡'];
+let gameBoard = document.getElementById("gameBoard");
+let movesCounter = document.getElementById("moves");
+let restartBtn = document.getElementById("restartBtn");
+let emojiRainContainer = document.getElementById("emojiRainContainer");
+
+let moves = 0;
+let firstCard = null;
+let secondCard = null;
+
+function shuffle(array) {
+    return array.sort(() => Math.random() - 0.5);
+}
+
+function createGame() {
+    let emojiPairs = shuffle([...emojis, ...emojis]);
+    gameBoard.innerHTML = "";
+    moves = 0;
+    movesCounter.textContent = moves;
+    firstCard = secondCard = null;
+    restartBtn.style.display = "none";
+
+    emojiPairs.forEach(emoji => {
+        let card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.emoji = emoji;
+        card.addEventListener("click", flipCard);
+        gameBoard.appendChild(card);
+    });
+}
+
+function flipCard() {
+    if (this.classList.contains("flipped") || secondCard) return;
+
+    this.textContent = this.dataset.emoji;
+    this.classList.add("flipped");
+
+    if (!firstCard) {
+        firstCard = this;
+    } else {
+        secondCard = this;
+        moves++;
+        movesCounter.textContent = moves;
+        checkMatch();
+    }
+}
+
+function checkMatch() {
+    if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+        firstCard.classList.add("matched");
+        secondCard.classList.add("matched");
+        checkWin();
+        resetTurn();
+    } else {
+        setTimeout(() => {
+            firstCard.textContent = "";
+            secondCard.textContent = "";
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
+            resetTurn();
+        }, 1000);
+    }
+}
+
+function resetTurn() {
+    firstCard = null;
+    secondCard = null;
+}
+
+function checkWin() {
+    if (document.querySelectorAll(".matched").length === emojis.length * 2) {
+        startEmojiRain();
+        restartBtn.style.display = "inline-block";
+    }
+}
+
+function startEmojiRain() {
+    emojiRainContainer.innerHTML = "";
+    emojiRainContainer.style.position = "absolute";
+    emojiRainContainer.style.top = "0";
+    emojiRainContainer.style.left = "0";
+    emojiRainContainer.style.width = "100%";
+    emojiRainContainer.style.height = "100vh";
+    emojiRainContainer.style.pointerEvents = "none";
+    emojiRainContainer.style.overflow = "hidden";
+    emojiRainContainer.style.zIndex = "100";
+
+    for (let i = 40; i--; ) {
+        let emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.position = "absolute";
+        emoji.style.left = Math.random() * 100 + "%";
+        emoji.style.top = "-30px";
+        emoji.style.fontSize = Math.random() * 1.5 + 0.5 + "em";
+        emoji.style.animation = `fall ${Math.random() * 2 + 1.5}s linear forwards`;
+
+        emojiRainContainer.appendChild(emoji);
+
+        setTimeout(() => {
+            emoji.remove();
+        }, 8000);
+    }
+}
+
+restartBtn.addEventListener("click", createGame);
+createGame();
+
+                </script>
+            </div>
+
+            <div class="play-item play-5">
+                <div class="colorGuess">
+                    <h1 class="title">Guess the color (<span id="score">0/0</span>)</h1>
+                    <div id="colorDisplay" class="color"></div>
+                    <div id="buttonsContainer" class="btns"></div>
+                    <div id="resultContainer" class="result" style="display: none;">
+                        <div id="resultText"></div>
+                        <button id="nextBtn" class="btn">Next</button>
+                    </div>
+                </div>
+                <script>
+                    let score = { tries: 0, success: 0 };
+                    let correctColor = "";
+
+                    function getColor() {
+                        const chars = "1234567890ABCDEF";
+                        let color = "#";
+                        for (let i = 0; i < 6; i++) {
+                            color += chars[Math.floor(Math.random() * chars.length)];
+                        }
+                        return color;
+                    }
+
+                    function generateColors() {
+                        let colors = [getColor(), getColor(), getColor()];
+                        correctColor = colors[Math.floor(Math.random() * colors.length)];
+
+                        document.getElementById("colorDisplay").style.backgroundColor = correctColor;
+
+                        let buttonsContainer = document.getElementById("buttonsContainer");
+                        buttonsContainer.innerHTML = ""; // Clear previous buttons
+
+                        colors.forEach(color => {
+                            let btn = document.createElement("button");
+                            btn.classList.add("btn");
+                            btn.textContent = color;
+                            btn.style.backgroundColor = "#c78f00"; // Reset button color
+                            btn.onclick = () => checkAnswer(color);
+                            buttonsContainer.appendChild(btn);
+                        });
+
+                        // Hide result and re-enable buttons
+                        document.getElementById("resultContainer").style.display = "none";
+                    }
+
+                    function checkAnswer(color) {
+                        let isCorrect = color === correctColor;
+                        score.tries++;
+                        if (isCorrect) {
+                            score.success++;
+                        }
+
+                        document.getElementById("resultText").textContent = isCorrect ? "Correct!" : "Wrong!";
+                        document.getElementById("resultContainer").style.display = "block";
+                        document.getElementById("score").textContent = `${score.success}/${score.tries}`;
+
+                        // Disable buttons after answering
+                        document.querySelectorAll("#buttonsContainer .btn").forEach(btn => {
+                            btn.classList.add("disabled");
+                            btn.style.backgroundColor = btn.textContent === correctColor ? "green" : "red"; // Show correct answer
+                        });
+                    }
+
+                    // Reset game when clicking "Next"
+                    document.getElementById("nextBtn").addEventListener("click", function () {
+                        generateColors();
+                        document.querySelectorAll("#buttonsContainer .btn").forEach(btn => btn.classList.remove("disabled"));
+                    });
+
+                    generateColors();
+                </script>
+            </div>
+
+            <div class="play-item play-2">
+                <button id="confetti-btn">Click me!</button>
+                <script>
+                    function randomInRange(min, max) {
+                        return Math.random() * (max - min) + min;
+                    }
+
+                    document.getElementById("confetti-btn").addEventListener("click", function (event) {
+                        const button = event.target;
+                        const rect = button.getBoundingClientRect();
+
+                        const centerX = (rect.left + rect.right) / 2 / window.innerWidth;
+                        const centerY = (rect.top + rect.bottom) / 2 / window.innerHeight;
+
+                        confetti({
+                            particleCount: 100,
+                            startVelocity: 40,
+                            spread: 360,
+                            origin: { x: centerX, y: centerY }
+                        });
+                    });
+                </script>
+            </div>
+
+            <div class="play-item play-3">
+                <h1>Click anywhere to HIT!</h1>
+                <script>
+                    var winPos;
+                    var flag = false;
+
+                    document.querySelector(".play-3").addEventListener("click", function (e) {
+                        var div = document.createElement("div");
+                        this.appendChild(div); // Append div to play-3 container
+
+                        // Set the position of the new div relative to the play-3 container
+                        div.style.left = e.pageX - this.offsetLeft + "px";
+                        div.style.top = e.pageY - this.offsetTop + "px";
+
+                        var maxElems = 16;
+                        for (var i = 0; i < maxElems; i++) {
+                            var span = document.createElement("span");
+                            var newSpan = div.appendChild(span);
+                            var deg = i * (360 / maxElems) + Math.floor(Math.random() * 15);
+                            var height = 20 + Math.floor(Math.random() * 30);
+                            var width = 4 + Math.floor(Math.random() * 10);
+                            newSpan.style.height = height + "px";
+                            newSpan.style.width = width + "px";
+                            newSpan.style.transform = "rotate(" + deg + "deg)";
+                        }
+
+                        window.requestAnimationFrame(function () {
+                            Array.from(div.querySelectorAll("span")).forEach((el) => {
+                                var trasY = -50 - Math.floor(Math.random() * 100);
+                                el.style.transform += "scaleY(0.5) translateY(" + trasY + "px)";
+                                el.style.opacity = "0";
+                            });
+
+                            // Remove the div after animation
+                            window.setTimeout(function () {
+                                div.remove();
+                            }, 400);
+                        });
+
+                        // Handle shake effect (Rotation-based shake)
+                        if (!flag) {
+                            flag = true;
+
+                            // Set the initial position of .play-3
+                            var play3 = this;
+                            var originalRotation = 0;
+
+                            var maxShakeDegree = 5; // Maximum rotation angle for the shake effect
+                            var shakeCount = 0;
+
+                            // Rotation shake effect - rotate back and forth
+                            var shake = window.setInterval(function () {
+                                var randomShakeDegree = Math.random() * maxShakeDegree - maxShakeDegree / 2;
+                                play3.style.transform = `rotate(${randomShakeDegree}deg)`; // Apply random rotation
+
+                                shakeCount++;
+                                if (shakeCount >= 20) { // Stop after a certain number of shakes
+                                    window.clearInterval(shake);
+                                    play3.style.transform = "rotate(0deg)"; // Reset rotation to original position
+                                    flag = false;
+                                }
+                            }, 30); // Interval for the shaking effect
+                        }
+                    });
+
+                </script>
+            </div>
+
+        </div>
+
+        <div class="border-glow">
+            <div class="playpen-question">
+                <h1>Do you like my deisgn?</h1>
+                <div class="question-flex">
+                    <button class="border" id="yes-btn">Yes</button>
+                    <button class="border" id="no-btn">No</button>
+                </div>
+                <div id="response">I knew you would say Yes!</div>
+                <script>
+                    document.getElementById("no-btn").addEventListener("click", function () {
+                        this.style.display = 'none';  // Hide the 'No' button after clicking
+                    });
+
+                    document.getElementById("yes-btn").addEventListener("click", function () {
+                        document.getElementById("response").style.display = 'block';
+                    });
+
+                </script>
+            </div>
         </div>
 
     </main>

@@ -301,7 +301,7 @@
     background-color: #0b0b0b; 
     animation: animatePlaid 5s linear infinite;
     z-index: -1;
-    opacity: 100%;
+    opacity: 70%;
 }
   @keyframes animatePlaid {
     0% {

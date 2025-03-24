@@ -4,47 +4,55 @@ const currentYear = new Date().getFullYear();
 yearEl.textContent = currentYear;
 
 // Page Slide
-const pages = ["home", "projects", "experience", "contact", "playpen"]; // Define page order
+const pages = ["home", "projects", "experience", "contact", "playpen"];
 const links = document.querySelectorAll('.nav-bar a');
 
 links.forEach(link => {
     link.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default link behavior
+        e.preventDefault();
 
         const currentPage = window.location.pathname.split("/").pop().replace(".html", "") || "home";
         const targetPage = new URL(link.href).pathname.split("/").pop().replace(".html", "") || "home";
 
-        if (currentPage === targetPage) return; // Do nothing if clicking the same page
+        if (currentPage === targetPage) return;
 
         const currentIndex = pages.indexOf(currentPage);
         const targetIndex = pages.indexOf(targetPage);
 
+        document.body.classList.remove('slide-left', 'slide-right'); // Ensure old classes are removed
+
         if (targetIndex > currentIndex) {
-            document.body.classList.add('slide-left'); // Forward navigation
-            document.body.classList.remove('slide-right');
+            document.body.classList.add('slide-left');
         } else {
-            document.body.classList.add('slide-right'); // Backward navigation
-            document.body.classList.remove('slide-left');
+            document.body.classList.add('slide-right');
         }
 
+        console.log("Navigating to:", link.href); // Debugging
+
         setTimeout(() => {
-            window.location = link.href;
-        }, 500); // Match animation duration
+            window.location.href = link.href;
+        }, 500);
     });
 });
-document.querySelector(".slide-btn a").addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent instant navigation
 
-    const targetPage = this.getAttribute("href"); // Get target page
+// Handle other slide button links correctly
+document.querySelectorAll(".slide-btn a").forEach(button => {
+    button.addEventListener("click", function (event) {
+        event.preventDefault();
+        const targetPage = this.getAttribute("href");
 
-    document.body.classList.add("slide-left"); // Add slide effect
+        document.body.classList.remove("slide-left", "slide-right");
+        document.body.classList.add("slide-left");
 
-    setTimeout(() => {
-        window.location.href = targetPage; // Navigate after animation
-    }, 500); // Match this duration with your CSS animation time
+        console.log("Navigating to:", targetPage); // Debugging
+
+        setTimeout(() => {
+            window.location.href = targetPage;
+        }, 500);
+    });
 });
 
-// Form
+// Form in Contact Page
 function handleSubmit(event) {
     event.preventDefault();  // Prevent form from submitting and redirecting
 
@@ -76,17 +84,14 @@ function handleSubmit(event) {
 
 // Loader
 
-window.addEventListener("load", function () {
-    // Hide loader
-    document.querySelector(".loader-container").classList.add("hidden");
+// window.addEventListener("load", function () {
+//     document.querySelector(".loader-container").classList.add("hidden");
+//     setTimeout(() => {
+//       document.querySelector(".main-loader").classList.add("visible");
+//     }, 500); 
+//   });
 
-    // Show main-loader content
-    setTimeout(() => {
-      document.querySelector(".main-loader").classList.add("visible");
-    }, 500); // Small delay for smooth transition
-  });
-
-//   Slider btn
+//   Slider btn in Projects Page
 document.getElementById("togBtn").addEventListener("change", function() {
     var isChecked = this.checked;
     
