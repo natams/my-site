@@ -135,7 +135,7 @@ a:hover {
 }
 
 .svg-icon a {
-    pointer-events: auto;
+	pointer-events: auto;
 }
 
 .svg-icon::after {
@@ -579,13 +579,21 @@ li {
 	margin: -1em auto 5em auto;
 }
 
+@font-face {
+	font-family: 'Impact';
+	src: url('impact/impact.woff2') format('woff2'),
+		 url('impact/impact.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+  }
+
 .projects h2 {
 	font-size: 2em;
-	font-family: fantasy;
+	font-family: 'Impact', sans-serif;
 	text-align: center;
 	text-transform: uppercase;
 	margin: 2em auto 0.5em auto;
-	font-weight: 500;
+	font-weight: 400;
 	line-height: 1;
 	-webkit-text-fill-color: #ffffff;
 	background: none;
@@ -890,27 +898,34 @@ input:checked+.slider .off {
 	}
 
 	.projects-marquee {
-		overflow-x: auto; /* Enable horizontal scrolling */
-	overflow-y: hidden; /* Prevent vertical scrolling */
-	scroll-snap-type: x mandatory; /* Ensure smooth scrolling */
-	-webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile */
+		overflow-x: auto;
+		/* Enable horizontal scrolling */
+		overflow-y: hidden;
+		/* Prevent vertical scrolling */
+		scroll-snap-type: x mandatory;
+		/* Ensure smooth scrolling */
+		-webkit-overflow-scrolling: touch;
+		/* Enable smooth scrolling on mobile */
 	}
 
 	.projects-marquee__content {
-		scroll-snap-align: start; /* Make each item snap into place */
+		scroll-snap-align: start;
+		/* Make each item snap into place */
 	}
 
 	.projects-marquee::-webkit-scrollbar {
-		display: none; /* Chrome, Safari, Opera */
+		display: none;
+		/* Chrome, Safari, Opera */
 	}
 
-	.projects-marquee__content > li {
+	.projects-marquee__content>li {
 		list-style-type: none;
 		display: flex;
 		align-items: center;
 		margin: 0;
 		flex-shrink: 0;
-		scroll-snap-align: center; /* Each item aligns to the center while scrolling */
+		scroll-snap-align: center;
+		/* Each item aligns to the center while scrolling */
 	}
 
 	.project-container:nth-of-type(1) .projects-logo {
@@ -932,20 +947,22 @@ input:checked+.slider .off {
 	.projects-marquee__project {
 		width: 400px;
 	}
-	
+
 	@keyframes projects-marquee-scroll {
 		from {
 			transform: translateX(0);
 		}
+
 		to {
 			transform: translateX(-100%);
 		}
 	}
-	
+
 	@keyframes projects-marquee-scroll-reverse {
 		from {
 			transform: translateX(-100%);
 		}
+
 		to {
 			transform: translateX(0);
 		}
@@ -957,7 +974,7 @@ input:checked+.slider .off {
 		max-width: 250px;
 		max-height: 250px;
 	}
-	
+
 	.desktop .projects-marquee__project {
 		width: 350px;
 	}
@@ -1124,7 +1141,7 @@ input:checked+.slider .off {
 		margin: 0em 0em 0em 0em;
 		gap: 0.5em;
 		justify-content: end;
-        max-width: 410px;
+		max-width: 410px;
 	}
 
 	.experience-year {
@@ -1153,7 +1170,7 @@ input:checked+.slider .off {
 		justify-content: center;
 		max-width: 430px;
 	}
-	
+
 	.experience-year {
 		margin: 0.5em 0em 0em 7em;
 	}
