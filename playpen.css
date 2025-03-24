@@ -782,6 +782,12 @@ h1 {
     transition: transform 0.15s ease-in-out;
     box-shadow: inset 2px 2px 6px #00ff8080, 
     inset 0px 0px 6px #00ff8080;
+    -webkit-tap-highlight-color: transparent; 
+    user-select: none;
+}
+
+.play-8 .whack-mole-grid .whack-hole:active {
+    outline: none;
 }
 
 .play-8 .whack-mole-grid .whack-hole:hover {

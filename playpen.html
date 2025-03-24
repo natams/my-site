@@ -196,85 +196,101 @@
                     <button class="whack-restart" id="restartMole" style="display: none;">Restart Game</button>
                 </div>
                 <script>
-                    let moleScore = 0;
-                    let missCount = 0;
-                    const maxMisses = 3;
+let moleScore = 0;
+let missCount = 0;
+const maxMisses = 3;
+let moleInterval;
+let intervalTime = 1000; // Start speed (1s per mole)
+const minInterval = 600; // Slowest possible speed (0.6s per mole)
+const speedIncreaseThreshold = 3; // Speed increases every 3 hits
 
-                    const scoreDisplay = document.getElementById("moleScore");
-                    const gameOverMessage = document.getElementById("gameOverMessage");
-                    const playButton = document.getElementById("playnow");
-                    const restartButton = document.getElementById("restartMole");
-                    const holes = document.querySelectorAll(".whack-mole-grid .whack-hole");
+const scoreDisplay = document.getElementById("moleScore");
+const gameOverMessage = document.getElementById("gameOverMessage");
+const playButton = document.getElementById("playnow");
+const restartButton = document.getElementById("restartMole");
+const holes = document.querySelectorAll(".whack-mole-grid .whack-hole");
 
-                    let activeHoleIndex = -1;
-                    let moleInterval;
-                    let gameStarted = false;
+let activeHoleIndex = -1;
+let gameStarted = false;
 
-                    // Function to show a mole in a random hole
-                    function showMole() {
-                        if (activeHoleIndex >= 0) {
-                            // If the mole is still there and wasn't whacked, it's a miss
-                            if (holes[activeHoleIndex].classList.contains("whack-active")) {
-                                missCount++;
-                            }
-                            holes[activeHoleIndex].classList.remove("whack-active");
-                        }
+// Function to show a mole in a random hole
+function showMole() {
+    if (activeHoleIndex >= 0) {
+        if (holes[activeHoleIndex].classList.contains("whack-active")) {
+            missCount++;
+        }
+        holes[activeHoleIndex].classList.remove("whack-active");
+    }
 
-                        if (missCount >= maxMisses) {
-                            endGame();
-                            return;
-                        }
+    if (missCount >= maxMisses) {
+        endGame();
+        return;
+    }
 
-                        activeHoleIndex = Math.floor(Math.random() * holes.length);
-                        holes[activeHoleIndex].classList.add("whack-active");
-                    }
+    activeHoleIndex = Math.floor(Math.random() * holes.length);
+    holes[activeHoleIndex].classList.add("whack-active");
 
-                    // Start game: Reset everything and begin showing moles
-                    function startMoleGame() {
-                        moleScore = 0;
-                        missCount = 0;
-                        scoreDisplay.innerText = "Score: " + moleScore;
+    clearInterval(moleInterval);
+    moleInterval = setInterval(showMole, intervalTime);
+}
 
-                        gameOverMessage.style.display = "none"; // Hide Game Over message
-                        playButton.style.display = "none"; // Hide play button
-                        restartButton.style.display = "inline-block"; // Show restart button
+// Start game: Reset everything and begin showing moles
+function startMoleGame() {
+    moleScore = 0;
+    missCount = 0;
+    intervalTime = 1000; // Reset interval to normal
+    scoreDisplay.innerText = "Score: " + moleScore;
 
-                        gameStarted = true;
-                        moleInterval = setInterval(showMole, 1000);
-                    }
+    gameOverMessage.style.display = "none";
+    playButton.style.display = "none";
+    restartButton.style.display = "inline-block";
 
-                    // End game: Show Game Over message and stop mole spawning
-                    function endGame() {
-                        clearInterval(moleInterval);
-                        gameStarted = false;
+    gameStarted = true;
+    moleInterval = setInterval(showMole, intervalTime);
+}
 
-                        gameOverMessage.style.display = "block"; // Show "Game Over!"
-                        playButton.style.display = "none"; // Hide Play Now button
-                        restartButton.style.display = "inline-block"; // Keep restart button visible
-                    }
+// End game: Show Game Over message and stop mole spawning
+function endGame() {
+    clearInterval(moleInterval);
+    gameStarted = false;
 
-                    // Restart game when restart button is clicked
-                    restartButton.addEventListener("click", () => {
-                        gameOverMessage.style.display = "none"; // Hide Game Over message
-                        playButton.style.display = "inline-block"; // Show Play Now button
-                        restartButton.style.display = "none"; // Hide Restart button
-                    });
+    gameOverMessage.style.display = "block";
+    playButton.style.display = "none";
+    restartButton.style.display = "inline-block";
+}
 
-                    // Add click event listeners to all holes
-                    holes.forEach((hole) => {
-                        hole.addEventListener("click", () => {
-                            if (gameStarted && hole.classList.contains("whack-active")) {
-                                moleScore++;
-                                scoreDisplay.innerText = "Score: " + moleScore;
-                                hole.classList.remove("whack-active");
-                                activeHoleIndex = -1;
-                                missCount = 0; // Reset miss count on a successful hit
-                            }
-                        });
-                    });
+// Restart game when restart button is clicked
+restartButton.addEventListener("click", () => {
+    clearInterval(moleInterval);
+    gameStarted = false;
 
-                    // Start game when "Play Now" is clicked
-                    playButton.addEventListener("click", startMoleGame);
+    gameOverMessage.style.display = "none";
+    playButton.style.display = "inline-block";
+    restartButton.style.display = "none";
+});
+
+// Add click event listeners to all holes
+holes.forEach((hole) => {
+    hole.addEventListener("click", () => {
+        if (gameStarted && hole.classList.contains("whack-active")) {
+            moleScore++;
+            scoreDisplay.innerText = "Score: " + moleScore;
+            hole.classList.remove("whack-active");
+            activeHoleIndex = -1;
+            missCount = 0; // Reset miss count on a successful hit
+
+            // Speed up every few hits
+            if (moleScore % speedIncreaseThreshold === 0) {
+                let newInterval = Math.max(minInterval, intervalTime * 0.975); // Reduce interval by 2.5%
+                intervalTime = newInterval;
+            }
+        }
+    });
+});
+
+// Start game when "Play Now" is clicked
+playButton.addEventListener("click", startMoleGame);
+
                 </script>
             </div>
 
@@ -289,114 +305,114 @@
                     <div id="emojiRainContainer"></div>
                 </div>
                 <script>
-                 const emojis = ['😀', '😂', '😍', '😎', '😜', '🤩', '🥳', '😡'];
-let gameBoard = document.getElementById("gameBoard");
-let movesCounter = document.getElementById("moves");
-let restartBtn = document.getElementById("restartBtn");
-let emojiRainContainer = document.getElementById("emojiRainContainer");
+                    const emojis = ['😀', '😂', '😍', '😎', '😜', '🤩', '🥳', '😡'];
+                    let gameBoard = document.getElementById("gameBoard");
+                    let movesCounter = document.getElementById("moves");
+                    let restartBtn = document.getElementById("restartBtn");
+                    let emojiRainContainer = document.getElementById("emojiRainContainer");
 
-let moves = 0;
-let firstCard = null;
-let secondCard = null;
+                    let moves = 0;
+                    let firstCard = null;
+                    let secondCard = null;
 
-function shuffle(array) {
-    return array.sort(() => Math.random() - 0.5);
-}
+                    function shuffle(array) {
+                        return array.sort(() => Math.random() - 0.5);
+                    }
 
-function createGame() {
-    let emojiPairs = shuffle([...emojis, ...emojis]);
-    gameBoard.innerHTML = "";
-    moves = 0;
-    movesCounter.textContent = moves;
-    firstCard = secondCard = null;
-    restartBtn.style.display = "none"; // Hide restart button initially
+                    function createGame() {
+                        let emojiPairs = shuffle([...emojis, ...emojis]);
+                        gameBoard.innerHTML = "";
+                        moves = 0;
+                        movesCounter.textContent = moves;
+                        firstCard = secondCard = null;
+                        restartBtn.style.display = "none"; // Hide restart button initially
 
-    emojiPairs.forEach(emoji => {
-        let card = document.createElement("div");
-        card.classList.add("card");
-        card.dataset.emoji = emoji;
-        card.addEventListener("click", flipCard);
-        gameBoard.appendChild(card);
-    });
-}
+                        emojiPairs.forEach(emoji => {
+                            let card = document.createElement("div");
+                            card.classList.add("card");
+                            card.dataset.emoji = emoji;
+                            card.addEventListener("click", flipCard);
+                            gameBoard.appendChild(card);
+                        });
+                    }
 
-function flipCard() {
-    if (this.classList.contains("flipped") || secondCard) return;
+                    function flipCard() {
+                        if (this.classList.contains("flipped") || secondCard) return;
 
-    this.textContent = this.dataset.emoji;
-    this.classList.add("flipped");
+                        this.textContent = this.dataset.emoji;
+                        this.classList.add("flipped");
 
-    if (!firstCard) {
-        firstCard = this;
-        restartBtn.style.display = "inline-block"; // Show restart button when first card is clicked
-    } else {
-        secondCard = this;
-        moves++;
-        movesCounter.textContent = moves;
-        checkMatch();
-    }
-}
+                        if (!firstCard) {
+                            firstCard = this;
+                            restartBtn.style.display = "inline-block"; // Show restart button when first card is clicked
+                        } else {
+                            secondCard = this;
+                            moves++;
+                            movesCounter.textContent = moves;
+                            checkMatch();
+                        }
+                    }
 
-function checkMatch() {
-    if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
-        firstCard.classList.add("matched");
-        secondCard.classList.add("matched");
-        checkWin();
-        resetTurn();
-    } else {
-        setTimeout(() => {
-            firstCard.textContent = "";
-            secondCard.textContent = "";
-            firstCard.classList.remove("flipped");
-            secondCard.classList.remove("flipped");
-            resetTurn();
-        }, 1000);
-    }
-}
+                    function checkMatch() {
+                        if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+                            firstCard.classList.add("matched");
+                            secondCard.classList.add("matched");
+                            checkWin();
+                            resetTurn();
+                        } else {
+                            setTimeout(() => {
+                                firstCard.textContent = "";
+                                secondCard.textContent = "";
+                                firstCard.classList.remove("flipped");
+                                secondCard.classList.remove("flipped");
+                                resetTurn();
+                            }, 1000);
+                        }
+                    }
 
-function resetTurn() {
-    firstCard = null;
-    secondCard = null;
-}
+                    function resetTurn() {
+                        firstCard = null;
+                        secondCard = null;
+                    }
 
-function checkWin() {
-    if (document.querySelectorAll(".matched").length === emojis.length * 2) {
-        startEmojiRain();
-        restartBtn.style.display = "inline-block"; // Restart button appears after winning
-    }
-}
+                    function checkWin() {
+                        if (document.querySelectorAll(".matched").length === emojis.length * 2) {
+                            startEmojiRain();
+                            restartBtn.style.display = "inline-block"; // Restart button appears after winning
+                        }
+                    }
 
-function startEmojiRain() {
-    emojiRainContainer.innerHTML = "";
-    emojiRainContainer.style.position = "absolute";
-    emojiRainContainer.style.top = "0";
-    emojiRainContainer.style.left = "0";
-    emojiRainContainer.style.width = "100%";
-    emojiRainContainer.style.height = "100vh";
-    emojiRainContainer.style.pointerEvents = "none";
-    emojiRainContainer.style.overflow = "hidden";
-    emojiRainContainer.style.zIndex = "100";
+                    function startEmojiRain() {
+                        emojiRainContainer.innerHTML = "";
+                        emojiRainContainer.style.position = "absolute";
+                        emojiRainContainer.style.top = "0";
+                        emojiRainContainer.style.left = "0";
+                        emojiRainContainer.style.width = "100%";
+                        emojiRainContainer.style.height = "100vh";
+                        emojiRainContainer.style.pointerEvents = "none";
+                        emojiRainContainer.style.overflow = "hidden";
+                        emojiRainContainer.style.zIndex = "100";
 
-    for (let i = 40; i--; ) {
-        let emoji = document.createElement("div");
-        emoji.classList.add("emoji");
-        emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        emoji.style.position = "absolute";
-        emoji.style.left = Math.random() * 100 + "%";
-        emoji.style.top = "-30px";
-        emoji.style.fontSize = Math.random() * 1.5 + 0.5 + "em";
-        emoji.style.animation = `fall ${Math.random() * 2 + 1.5}s linear forwards`;
+                        for (let i = 40; i--;) {
+                            let emoji = document.createElement("div");
+                            emoji.classList.add("emoji");
+                            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                            emoji.style.position = "absolute";
+                            emoji.style.left = Math.random() * 100 + "%";
+                            emoji.style.top = "-30px";
+                            emoji.style.fontSize = Math.random() * 1.5 + 0.5 + "em";
+                            emoji.style.animation = `fall ${Math.random() * 2 + 1.5}s linear forwards`;
 
-        emojiRainContainer.appendChild(emoji);
+                            emojiRainContainer.appendChild(emoji);
 
-        setTimeout(() => {
-            emoji.remove();
-        }, 8000);
-    }
-}
+                            setTimeout(() => {
+                                emoji.remove();
+                            }, 8000);
+                        }
+                    }
 
-restartBtn.addEventListener("click", createGame);
-createGame();
+                    restartBtn.addEventListener("click", createGame);
+                    createGame();
 
                 </script>
             </div>
