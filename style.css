@@ -378,7 +378,7 @@ h2 {
 	}
 
 	.content {
-		margin: 2em 3em 1em 3em;
+		margin: 0em 0em 1em 0em;
 	}
 }
 
@@ -392,6 +392,7 @@ h2 {
 
 	.content {
 		padding: 1em 0em 0em 0.5em;
+		margin: 0em 1em;
 	}
 
 	.section-1-flex {
@@ -562,6 +563,10 @@ li {
 	.section-3 {
 		margin: 2em 1em 0em 1em;
 		gap: 1em;
+	}
+
+	.btn {
+		margin: 0.5em auto 1em auto;
 	}
 }
 
@@ -1426,6 +1431,7 @@ textarea:-webkit-autofill:focus {
 
 	.contact-details h4 {
 		margin: 0.5em 0em 0.5em 0em;
+		font-size: 1.6em;
 	}
 
 	.contact h2 {
