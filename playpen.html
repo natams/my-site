@@ -264,10 +264,14 @@ restartButton.addEventListener("click", () => {
     clearInterval(moleInterval);
     gameStarted = false;
 
+    // Remove any active moles
+    holes.forEach((hole) => hole.classList.remove("whack-active"));
+
     gameOverMessage.style.display = "none";
     playButton.style.display = "inline-block";
     restartButton.style.display = "none";
 });
+
 
 // Add click event listeners to all holes
 holes.forEach((hole) => {
