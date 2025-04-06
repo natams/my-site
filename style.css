@@ -1493,7 +1493,7 @@ footer p {
 
 @media screen and (max-width: 540px) {
 	footer p {
-		/* font-size: 0.6em; */
+		font-size: 0.55em;
 		margin: 5em 2em 2em 2em;
 	}
 }
