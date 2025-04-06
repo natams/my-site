@@ -1486,14 +1486,14 @@ textarea:-webkit-autofill:focus {
 
 footer p {
 	text-align: center;
-	font-size: 0.8em;
+	font-size: 0.6em;
 	color: #ababab;
 	margin: 3em 1em 2em 1em;
 }
 
 @media screen and (max-width: 540px) {
 	footer p {
-		font-size: 0.6em;
+		/* font-size: 0.6em; */
 		margin: 5em 2em 2em 2em;
 	}
 }
