@@ -374,7 +374,7 @@ h2 {
 	}
 
 	.emoji-title {
-		padding: 1.3em 2em 0.5em 2em;
+		padding: 1.3em 2em 0.5em 1em;
 	}
 
 	.content {
@@ -391,11 +391,11 @@ h2 {
 
 	.content {
 		padding: 1em 0em 0em 0.5em;
-		margin: 0em 1em;
+		margin: 0.5em 1em 0em 1em;
 	}
 
 	.section-3 .content {
-		padding: 1em 0em 0.5em 0.5em;
+		padding: 1em 0em 1em 0.5em;
 	}
 
 	.section-1-flex {
@@ -403,7 +403,11 @@ h2 {
 	}
 
 	.social-icons {
-		margin: 0em 0em 0em 3em;
+		margin: 0em 0em 0em 1.3em;
+	}
+
+	.emoji-background img {
+		margin: 0.5em 1em;
 	}
 
 }
@@ -480,7 +484,7 @@ li {
 @media screen and (max-width: 1000px) {
 	.marquee {
 		background: linear-gradient(to right, transparent 2%, #000000 10%, #000000 80%, transparent 98%);
-		margin: 1em 0em;
+		margin: 0em;
 	}
 }
 
