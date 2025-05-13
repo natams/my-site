@@ -374,7 +374,7 @@ h2 {
 	}
 
 	.emoji-title {
-		padding: 1.3em 2em 0.5em 1em;
+		padding: 2em 2em 0.5em 1em;
 	}
 
 	.content {
@@ -484,7 +484,7 @@ li {
 @media screen and (max-width: 1000px) {
 	.marquee {
 		background: linear-gradient(to right, transparent 2%, #000000 10%, #000000 80%, transparent 98%);
-		margin: 0em;
+		margin: 1em 0em 0em 0em;
 	}
 }
 
@@ -497,6 +497,12 @@ li {
 		mask-image: linear-gradient(to right, transparent, transparent 5%, #000000e6 15%, #000000e6 85%, transparent 95%, transparent);
 		-webkit-mask-image: linear-gradient(to right, transparent, transparent 5%, #000000e6 15%, #000000e6 85%, transparent 95%, transparent);
 		background: linear-gradient(to right, transparent 2%, #000000 10%, #000000 90%, transparent 98%);
+	}
+}
+
+@media screen and (max-width: 540px) {
+	.marquee {
+		margin: 2em 0em 0em 0em;
 	}
 }
 
@@ -1488,16 +1494,23 @@ textarea:-webkit-autofill:focus {
 
 /* Footer */
 
+footer {
+	padding: 3em 1em 2em 1em;
+}
+
 footer p {
 	text-align: center;
 	font-size: 0.6em;
 	color: #ababab;
-	margin: 3em 1em 2em 1em;
+	
 }
 
 @media screen and (max-width: 540px) {
-	footer p {
+	footer {
+		padding: 5em 2em 2em 2em;
+		}
+
+	footer p { 
 		font-size: 0.55em;
-		margin: 5em 2em 2em 2em;
 	}
 }
