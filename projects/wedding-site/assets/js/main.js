@@ -247,7 +247,11 @@ scrollDown.addEventListener('click', () => {
 class CountdownElement extends HTMLElement {
 	connectedCallback() {
 		this.updateCountdown();
-		setInterval(() => this.updateCountdown(), 1000);
+		this._interval = setInterval(() => this.updateCountdown(), 1000);
+	}
+
+	disconnectedCallback() {
+		clearInterval(this._interval);
 	}
 
 	updateCountdown() {
@@ -255,21 +259,28 @@ class CountdownElement extends HTMLElement {
 		const currentDate = new Date().getTime();
 		const timeDifference = countdownDate - currentDate;
 
+		if (timeDifference < 0) {
+			this.innerHTML = `<div>Countdown Ended</div>`;
+			clearInterval(this._interval);
+			return;
+		}
+
 		const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 		const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 		const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
 		const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
 		this.innerHTML = `
-                <div id="days">${days}</div>
-                <div id="hours">${hours}</div>
-                <div id="minutes">${minutes}</div>
-                <div id="seconds">${seconds}</div>
-            `;
+			<div id="days">${days}</div>
+			<div id="hours">${hours}</div>
+			<div id="minutes">${minutes}</div>
+			<div id="seconds">${seconds}</div>
+		`;
 	}
 }
+
 customElements.define('custom-countdown', CountdownElement);
-document.addEventListener('DOMContentLoaded', function () { });
+
 
 // RSVP Email
 
