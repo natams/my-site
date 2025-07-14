@@ -255,7 +255,7 @@ class CountdownElement extends HTMLElement {
 	}
 
 	updateCountdown() {
-		const countdownDate = new Date('January 22, 2026 00:00:00').getTime();
+		const countdownDate = new Date('January 22, 2026 20:00:00').getTime(); // 8PM
 		const currentDate = new Date().getTime();
 		const timeDifference = countdownDate - currentDate;
 
@@ -280,7 +280,6 @@ class CountdownElement extends HTMLElement {
 }
 
 customElements.define('custom-countdown', CountdownElement);
-
 
 // RSVP Email
 
