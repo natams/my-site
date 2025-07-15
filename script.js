@@ -7,8 +7,17 @@ yearEl.textContent = currentYear;
 const pages = ["home", "projects", "experience", "contact", "playpen"];
 const links = document.querySelectorAll('.nav-bar a');
 
+function navigateWithAnimation(targetHref, animationClass) {
+    document.body.classList.remove("slide-left", "slide-right");
+    document.body.classList.add(animationClass);
+
+    setTimeout(() => {
+        window.location.href = targetHref;
+    }, 500);
+}
+
 links.forEach(link => {
-    link.addEventListener('click', (e) => {
+    link.addEventListener("click", (e) => {
         e.preventDefault();
 
         const currentPage = window.location.pathname.split("/").pop().replace(".html", "") || "home";
@@ -19,39 +28,46 @@ links.forEach(link => {
         const currentIndex = pages.indexOf(currentPage);
         const targetIndex = pages.indexOf(targetPage);
 
-        document.body.classList.remove('slide-left', 'slide-right'); // Ensure old classes are removed
+        const animationClass = targetIndex > currentIndex ? "slide-left" : "slide-right";
 
-        if (targetIndex > currentIndex) {
-            document.body.classList.add('slide-left');
-        } else {
-            document.body.classList.add('slide-right');
-        }
+        // Push new state into history
+        history.pushState({ page: targetPage }, "", link.href);
 
-        console.log("Navigating to:", link.href); // Debugging
-
-        setTimeout(() => {
-            window.location.href = link.href;
-        }, 500);
+        navigateWithAnimation(link.href, animationClass);
     });
 });
 
-// Handle other slide button links correctly
+// Slide button links
 document.querySelectorAll(".slide-btn a").forEach(button => {
-    button.addEventListener("click", function (event) {
-        event.preventDefault();
-        const targetPage = this.getAttribute("href");
+    button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetHref = button.getAttribute("href");
 
-        document.body.classList.remove("slide-left", "slide-right");
-        document.body.classList.add("slide-left");
+        // Push new state into history
+        history.pushState({ page: targetHref }, "", targetHref);
 
-        console.log("Navigating to:", targetPage); // Debugging
-
-        setTimeout(() => {
-            window.location.href = targetPage;
-        }, 500);
+        navigateWithAnimation(targetHref, "slide-left");
     });
 });
 
+// Handle browser Back/Forward button
+window.addEventListener("popstate", (event) => {
+    const targetHref = document.location.href;
+    const currentPage = window.location.pathname.split("/").pop().replace(".html", "") || "home";
+    const targetPage = targetHref.split("/").pop().replace(".html", "") || "home";
+
+    const currentIndex = pages.indexOf(currentPage);
+    const targetIndex = pages.indexOf(targetPage);
+    const animationClass = targetIndex > currentIndex ? "slide-left" : "slide-right";
+
+    // Animate before navigating
+    document.body.classList.remove("slide-left", "slide-right");
+    document.body.classList.add(animationClass);
+
+    setTimeout(() => {
+        window.location.href = targetHref;
+    }, 500);
+});
 
 
 // Loader
