@@ -899,6 +899,10 @@ input:checked+.slider .off {
 	background-color: #478493;
 }
 
+.naor {
+	background-color: #4b131e;
+}
+
 .aerius-nasonex {
 	background-color: #81a7b0;
 	display: flex;
