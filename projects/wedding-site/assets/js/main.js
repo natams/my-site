@@ -185,23 +185,23 @@
 let lastScrollTop = 0;
 const header = document.querySelector('.header');
 
-window.addEventListener('scroll', function() {
-    let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    let screenWidth = window.innerWidth;
+window.addEventListener('scroll', function () {
+	let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+	let screenWidth = window.innerWidth;
 
-    // Apply the hide/show behavior only if the screen width is larger than 900px
-    if (screenWidth > 900) {
-        if (currentScroll > lastScrollTop) {
-            header.style.transform = 'translateY(-100%)'; // Hide the header on scroll down
-        } else if (currentScroll === 0) {
-            header.style.transform = 'translateY(0)'; // Show the header only when at the top of the page
-        }
-    } else {
-        // If screen width is less than or equal to 900px, ensure the header is visible
-        header.style.transform = 'translateY(0)';
-    }
+	// Apply the hide/show behavior only if the screen width is larger than 900px
+	if (screenWidth > 900) {
+		if (currentScroll > lastScrollTop) {
+			header.style.transform = 'translateY(-100%)'; // Hide the header on scroll down
+		} else if (currentScroll === 0) {
+			header.style.transform = 'translateY(0)'; // Show the header only when at the top of the page
+		}
+	} else {
+		// If screen width is less than or equal to 900px, ensure the header is visible
+		header.style.transform = 'translateY(0)';
+	}
 
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+	lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
 }, false);
 
 
@@ -247,23 +247,13 @@ scrollDown.addEventListener('click', () => {
 class CountdownElement extends HTMLElement {
 	connectedCallback() {
 		this.updateCountdown();
-		this._interval = setInterval(() => this.updateCountdown(), 1000);
-	}
-
-	disconnectedCallback() {
-		clearInterval(this._interval);
+		setInterval(() => this.updateCountdown(), 1000);
 	}
 
 	updateCountdown() {
-		const countdownDate = new Date('January 22, 2026 20:00:00').getTime(); // 8PM
+		const countdownDate = new Date('July 30, 2026 00:00:00').getTime();
 		const currentDate = new Date().getTime();
 		const timeDifference = countdownDate - currentDate;
-
-		if (timeDifference < 0) {
-			this.innerHTML = `<div>Countdown Ended</div>`;
-			clearInterval(this._interval);
-			return;
-		}
 
 		const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 		const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -271,49 +261,51 @@ class CountdownElement extends HTMLElement {
 		const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
 
 		this.innerHTML = `
-			<div id="days">${days}</div>
-			<div id="hours">${hours}</div>
-			<div id="minutes">${minutes}</div>
-			<div id="seconds">${seconds}</div>
-		`;
+                <div id="days">${days}</div>
+                <div id="hours">${hours}</div>
+                <div id="minutes">${minutes}</div>
+                <div id="seconds">${seconds}</div>
+            `;
 	}
 }
-
 customElements.define('custom-countdown', CountdownElement);
+document.addEventListener('DOMContentLoaded', function () { });
 
 // RSVP Email
 
-document.getElementById('rsvp-form').addEventListener('submit', function (e) {
-    e.preventDefault();
+document.getElementById("rsvp-form").addEventListener("submit", function (e) {
+	e.preventDefault();
 
-    const form = e.target;
+	const form = e.target;
+	const formData = new FormData(form);
 
-    fetch(form.action, {
-        method: form.method,
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form),
-    })
-        .then(response => {
-            if (response.ok) {
-                form.reset(); 
-                document.getElementById('thank-you-message').style.display = 'block'; 
-            } else {
-                alert('There was an issue submitting your RSVP. Please try again.');
-            }
-        })
-        .catch(error => {
-            alert('There was an error submitting the form. Please try again.');
-        });
+	fetch(form.action, {
+		method: form.method,
+		body: formData,
+		headers: { "Accept": "application/json" }
+	}).then(response => {
+		if (response.ok) {
+			// Hide all RSVP content
+			document.getElementById("rsvp-content").style.display = "none";
+
+			// Show thank-you message
+			document.getElementById("thank-you-message").style.display = "block";
+		} else {
+			alert("Something went wrong. Please try again.");
+		}
+	}).catch(() => {
+		alert("Submission failed. Please try again.");
+	});
 });
 
 
 // Detect Chrome on mobile
 
 if (/Chrome/.test(navigator.userAgent) && /Mobile/.test(navigator.userAgent)) {
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        hero.classList.add('chrome-mobile');
-    }
+	const hero = document.querySelector('.hero');
+	if (hero) {
+		hero.classList.add('chrome-mobile');
+	}
 }
 
 
