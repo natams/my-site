@@ -1071,7 +1071,7 @@ input:checked+.slider .off {
 	background: #ffffff;
 	border-radius: 50%;
 	position: absolute;
-	transform: translate(-50%, 115%);
+	transform: translate(-40%, 115%);
 }
 
 .experience-content {
